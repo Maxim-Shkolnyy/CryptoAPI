@@ -198,6 +198,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Models\CryptoCurrency.cs" />
     <Compile Include="WebAPI\v1\Controllers\GetAPICurrenciesController.cs" />
     <Compile Include="WebAPI\v1\Controllers\Home_v1Controller.cs" />
     <Compile Include="WebAPI\v1\Controllers\ValuesController.cs" />
@@ -278,7 +279,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\bootstrap.min.js.map" />
