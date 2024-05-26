@@ -16,6 +16,12 @@ namespace CryptoAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Routes.MapHttpRoute(
+            name: "DefaultRoot",
+            routeTemplate: "",
+            defaults: new { controller = "Crypto", action = "GetSupportedCryptos" }
+        );
         }
     }
 }
