@@ -17,17 +17,21 @@ using Newtonsoft.Json.Linq;
 
 namespace CryptoAPI.WebAPI.v1.Controllers
 {
-    public class CryptoController : ApiController
+    public class Crypto_v1Controller : ApiController
     {
         private static readonly HttpClient _httpClient = new HttpClient();
 
         private readonly CryptoDbContext _context;
         private readonly string _coinApiKey;
+        private readonly WebSocketService _webSocketService;
 
-        public CryptoController()
+        public Crypto_v1Controller(WebSocketService webSocketService)
         {
             _context = new CryptoDbContext();
             _coinApiKey = System.Configuration.ConfigurationManager.AppSettings["CoinApiKey"];
+            _webSocketService = webSocketService;
+            _webSocketService.Connect();
+            _webSocketService.Subscribe("BTC/USD");
         }
 
         [HttpGet]
@@ -42,10 +46,16 @@ namespace CryptoAPI.WebAPI.v1.Controllers
         [Route("api/crypto/price/{symbol}")]
         public async Task<IHttpActionResult> GetCryptoPrice(string symbol)
         {
-            var client = new RestClient($"https://rest.coinapi.io/v1/exchangerate/{symbol}/USD");
-            //var request = new RestRequest(Method.Get);
+            var options = new RestClientOptions("https://rest.coinapi.io")
+            {
+                Timeout = TimeSpan.FromMilliseconds(3000),
+            };
+
+            var client = new RestClient(options);          
+
             var request = new RestRequest($"https://rest.coinapi.io/v1/exchangerate/{symbol}/USD", Method.Get);
 
+            request.AddHeader("Accept", "text/plain");
             request.AddHeader("X-CoinAPI-Key", _coinApiKey);
 
             var response = await client.ExecuteAsync(request);

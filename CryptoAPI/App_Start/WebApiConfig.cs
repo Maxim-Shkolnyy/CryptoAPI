@@ -20,7 +20,7 @@ namespace CryptoAPI
             config.Routes.MapHttpRoute(
             name: "DefaultRoot",
             routeTemplate: "",
-            defaults: new { controller = "Crypto", action = "GetSupportedCryptos" }
+            defaults: new { controller = "Crypto_v1", action = "GetCryptoPrice" }
         );
         }
     }
